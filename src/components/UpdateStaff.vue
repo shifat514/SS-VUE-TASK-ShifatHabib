@@ -40,6 +40,13 @@
                   id="phone"
                   v-model="StaffList.phone"
                 ></v-text-field>
+
+                <v-text-field
+                  name="image"
+                  label="Enter image"
+                  id="image"
+                  v-model="StaffList.image"
+                ></v-text-field>
                 <v-btn @click="addStaffs" class="btnInfo">add</v-btn>
               </v-flex>
             </v-layout>

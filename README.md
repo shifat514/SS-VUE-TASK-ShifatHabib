@@ -1,4 +1,4 @@
-# ss-vue-task
+# staff_management
 
 ## Project setup
 ```

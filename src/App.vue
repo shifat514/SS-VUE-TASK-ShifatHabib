@@ -5,6 +5,8 @@
      <v-app-bar-title><router-link to="/" tag="span" style="cursor:pointer">StaffManagement</router-link></v-app-bar-title>
       <v-spacer></v-spacer>
       <v-btn plain><router-link to="/addstaff" tag="span">Add Staff</router-link></v-btn>
+
+      <v-btn plain><router-link  to="/allstaffs" tag="span">View All Employees</router-link></v-btn>
     </v-app-bar>
     <v-main>
         <v-container class="mt-1" fluid>
@@ -13,6 +15,16 @@
       </v-main>
   </v-app>
 </template>
+
+<script>
+  export default {
+  }
+  </script>
+
+
+
+
+
 
 <style lang="scss">
 #app {

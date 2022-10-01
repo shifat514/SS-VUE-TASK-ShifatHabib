@@ -38,6 +38,13 @@
                 id="phone"
                 v-model="phone"
               ></v-text-field>
+
+              <v-text-field
+                name="image"
+                label="Add image Url"
+                id="image"
+                v-model="image"
+              ></v-text-field>
               <v-btn @click="addStaffs" class="btnInfo">add</v-btn>
             </v-flex>
           </v-layout>
@@ -69,6 +76,7 @@ export default {
       name:'',
       email:'',
       phone:'',
+      image:''
     }
   },
    computed:{
@@ -82,9 +90,9 @@ export default {
         const staffData={
           name: this.name,
           email: this.email,
-          phone:this.phone
+          phone:this.phone,
+          image:this.image
         };
-        console.log(staffData.name);
         this.$store.dispatch('addStaffs',staffData);
       },
 

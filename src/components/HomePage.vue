@@ -52,18 +52,12 @@
           {{$store.getters.totalAdmin}}
         </v-list-item-title>
       </v-list-item-content>
-
-    
     </v-list-item>
   </v-card>
 </v-flex>
 </v-row>
-
  </v-container>
- 
- 
 </template>
-
 <script>
 export default {
 }

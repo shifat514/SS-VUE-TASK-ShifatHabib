@@ -1,54 +1,23 @@
 <template>
     
     <v-container> 
-        <div>
-            <v-btn  @click="findStaff=true;" plain>View All Staffs</v-btn>
-            <v-btn @click="findStaff=false;" plain>View All Admins</v-btn>
-        </div>
-        <v-tabs>
-          <v-tabs-slider color="rgb(35, 40, 92) mb-1"></v-tabs-slider>
-          <v-tab href="#tableView">Table View</v-tab>
-  
-          <v-tab-item value="tableView">
-          <v-layout row>
-          <v-flex xs12>
-            <v-simple-table class="mx-xs-4  mx-sm-6 mx-md-8 mx-lg-10 mx-xl-12">
-              <template v-slot:default>
-                <thead>
-                  <tr >
-                    <th class="text-left">Name</th>
-                    <th class="text-left">Email</th>
-                    <th class="text-left">Phone Number</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr style="cursor:pointer"
-                    v-for="(staff,index) in employees"
-                    :key="index"
-                    @click="goToStaff(index)"
-                  >
-                  <td>
-                    <v-img
-                            height="30px"
-                            width="30px"
-                            v-bind:src="staff.image"
-                          >
-                    </v-img>
-                  </td>
-                    <td >{{ staff.name }}</td>
-                    <td>{{ staff.email }}</td>
-                    <td >{{ staff.phone }}</td>
-                    <td> <v-btn @click="goToStaff(index)" small>View Details</v-btn></td>
-                  </tr>
-                </tbody>
-              </template>
-            </v-simple-table>
+        <v-layout row wrap mt-2>
+        <v-flex class="text-sm-right pa-2" xs12 sm6>
+          <v-btn elevation="4" @click="findStaff=true;" class="btnInfo" large>View All Staffs</v-btn>
+
+        </v-flex>
+        <v-flex class="text-sm-left pa-2" xs12 sm6>
+          <v-btn elevation="4"  @click="findStaff=false;"  class="btnInfo" large>View All Admins</v-btn>
+        </v-flex>
+      </v-layout>
+
+      <v-layout mt-15 mb-4>
+          <v-flex xs12 sm6 offset-sm3>
+            <h2 v-if="findStaff==true">Staff List</h2>
+            <h2 v-else>Admin List</h2>
           </v-flex>
-          </v-layout>
-          </v-tab-item>
-  
-          <v-tab href="#cardView"> Card view </v-tab>
-          <v-tab-item value="cardView">
+        </v-layout>
+
             <v-layout row wrap 
             v-for="(staff,index) in employees" 
             :key="index"
@@ -65,20 +34,38 @@
                         </v-flex>
                         <v-flex xs6 sm7>
                           <v-card-title>
-                            <div>
-                              <h4 class="white--text">{{staff.name}}</h4>
-                              <div class="white--text mb-0"><p>{{staff.email}}</p></div>
-                              <div class="white--text mb-0"><p>{{staff.phone}}</p></div>
+                            <div class="text-left">
+                              <h5 class="white--text">Name: {{staff.name}}</h5>
+                              <h5 class="white--text ">mail: {{staff.email}}</h5>
+                              <h5 class="white--text ">Phone: {{staff.phone}}</h5>
                             </div>
                           </v-card-title>
-                          <v-card-text></v-card-text>
+                          <v-spacer></v-spacer>
+
                           <v-card-actions>
                             <v-btn
                             v-bind:to="'/staffdetail/' + index"
+                           v-if="findStaff==true"
                           >
                             See Details
                             <v-icon> mdi-chevron-right</v-icon>
                           </v-btn>
+                          <v-btn 
+                          v-bind:to="'/updatestaff/' + index"
+                          v-if="findStaff==true"
+                          color="rgb(0, 150, 87)"
+                          class="white--text"
+                          tag="span"
+                          @click="updateIndex(index)"
+                          >
+                          update</v-btn>
+
+                          <v-btn @click="removeStaff(index)" 
+                          router to="/AllStaffs" 
+                          class="white--text"
+                            color="rgb(226, 45, 45)"
+                          v-if="findStaff==true">Delete</v-btn>
+
                           </v-card-actions>
                         </v-flex>
                       </v-layout>
@@ -86,8 +73,6 @@
                   </v-card>
               </v-flex>
             </v-layout>
-          </v-tab-item>
-        </v-tabs>
     </v-container>
   </template>
   
@@ -95,7 +80,7 @@
   export default {
     data(){
        return{ 
-        findStaff:false
+        findStaff:true
      }
     },
     computed: {
@@ -112,6 +97,17 @@
       goToStaff(index){
         this.$router.push('/staffdetail/'+index);
       },
+      removeStaff(index){
+        if (confirm("Are you sure you want to delete this Staff?")) {
+          this.$store.dispatch('removeStaff',index);
+        }
+      },
+
+      updateIndex(index){
+        if(this.findStaff==true){
+          return  this.$store.state.staffList[index];
+        }
+      }
      
       
     },
@@ -122,11 +118,12 @@
   </script>
   
   <style>
-   .descriptiontruncate{
-     max-width: 15vw;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    
-   }
+   
+   .btnInfo{
+  background-color: rgb(234, 235, 249) !important;
+    }
+  .btnInfo:hover{
+  background-color: rgb(35, 40, 92) !important;
+  color:white;
+  }
   </style>

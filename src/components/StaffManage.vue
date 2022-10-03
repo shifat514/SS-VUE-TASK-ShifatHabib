@@ -24,6 +24,7 @@
               <v-flex xs12 >
                 <v-text-field
                 name="email"
+                type="email"
                 label="Enter Email"
                 id="email"
                 v-model="email"
@@ -44,13 +45,12 @@
                 label="Add image Url"
                 id="image"
                 v-model="image"
-              ></v-text-field>
-              <v-btn @click="addStaffs" class="btnInfo">add</v-btn>
+              ></v-text-field> 
+                <v-btn @click="verifyStaff" class="btnInfo">add staff</v-btn>
             </v-flex>
           </v-layout>
           </form>
-
-          <v-layout row mt-5>
+          <!-- <v-layout row mt-5>
               <v-flex sx12>
                 <ul>
                   <li v-for="(staff,index) in staffList" :key="index">Name: {{staff.name}} | Email:{{staff.email}} | Phone:{{staff.phone}}
@@ -58,11 +58,12 @@
                       v-bind:to="'/updatestaff/' + index"
                       tag="span">
                         update</v-btn>
+
                     <v-btn @click="removeStaff(index)" small>Delete</v-btn>
                 </li>
                 </ul>
               </v-flex>
-            </v-layout>
+            </v-layout> -->
         </v-flex>      
       </v-layout>  
     </v-container>
@@ -85,8 +86,56 @@ export default {
     }
    },
    methods:{
-      addStaffs(){
-        console.log(this.name);
+
+    verifyStaff(){
+        const isName=this.name;
+        const isEmail=this.email;
+        const isNumber=this.phone;
+        const isImage=this.image;
+
+        const regexEmail = new RegExp('[a-z0-9]+@[a-z]+\\.[a-z]{2,3}');
+        const emailTesting=regexEmail.test(isEmail);
+
+        const regexName = new RegExp('^[A-Za-z]+(\\s*[A-Za-z]+)*$');
+        const nameTesting=regexName.test(isName);
+
+        const regexNumber=new RegExp('(^(\\+8801|8801|01))[1|3-9]{1}(\\d){8}$');
+        const numberTesting=regexNumber.test(isNumber);
+      
+      if(nameTesting==true)
+      {
+        if(emailTesting==true)
+        {
+          if(numberTesting==true)
+          {
+            if(isImage !== null && isImage !== '') 
+            {
+              
+              alert('Staff is Added!!');
+              this.addstaffs();
+            }
+            else
+            {
+              alert('Add image Url!!');
+            }
+         
+          }
+          else{
+            alert('Phone Number is either invalid or empty! Add Bangladeshi Phone Number.');
+          }
+          
+        }
+        else{
+          alert('Email is either invalid or empty!');
+        }
+       
+      }
+      else{
+        alert('Name is either invalid or empty!');
+      }
+
+    },
+      addstaffs(){
         const staffData={
           name: this.name,
           email: this.email,
@@ -94,26 +143,23 @@ export default {
           image:this.image
         };
         this.$store.dispatch('addStaffs',staffData);
+        this.$router.push('/allstaffs/');
       },
 
       removeStaff(index){
          this.$store.dispatch('removeStaff',index);
       },
-
-      updateStaff(index){
-        this.$store.dispatch('updateStaff',index);
-      }
-      
    }
 
 }
 </script>
 
 <style>
-ul{
-
-  list-style-type:none;
-}
-
-
+  .btnInfo{
+  background-color: rgb(234, 235, 249) !important;
+    }
+  .btnInfo:hover{
+  background-color: rgb(35, 40, 92) !important;
+  color:white;
+  }
 </style>

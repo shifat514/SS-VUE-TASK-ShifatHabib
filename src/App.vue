@@ -4,9 +4,9 @@
      <v-icon dark right>mdi-console</v-icon>
      <v-app-bar-title><router-link to="/" tag="span" style="cursor:pointer">StaffManagement</router-link></v-app-bar-title>
       <v-spacer></v-spacer>
-      <v-btn plain><router-link to="/addstaff" tag="span">Add Staff</router-link></v-btn>
+      <router-link to="/addstaff" tag="span"><v-btn plain>Add Staff</v-btn></router-link>
 
-      <v-btn plain><router-link  to="/allstaffs" tag="span">View All Employees</router-link></v-btn>
+      <router-link  to="/allstaffs" tag="span"><v-btn plain>View All Employees</v-btn></router-link>
     </v-app-bar>
     <v-main>
         <v-container class="mt-1" fluid>

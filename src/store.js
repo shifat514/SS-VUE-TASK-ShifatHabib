@@ -58,7 +58,8 @@ const store = new Vuex.Store({
         REMOVE_STAFF(state,payload)
         {
             state.staffList.splice(payload,1);
-        }
+        },
+        
     },
     actions:{
         addStaffs(context,payload){
